@@ -1,0 +1,169 @@
+2020-10-30 16:00:05.277 logback [restartedMain] INFO  com.fz.zf.BootZfApplication - Starting BootZfApplication on DESKTOP-M36Q0LI with PID 7256 (D:\mywork\code2\boot-zf\target\classes started by zf01 in D:\mywork\code2\boot-zf)
+2020-10-30 16:00:05.278 logback [restartedMain] INFO  com.fz.zf.BootZfApplication - The following profiles are active: prod
+2020-10-30 16:00:05.366 logback [restartedMain] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4a316dc7: startup date [Fri Oct 30 16:00:05 CST 2020]; root of context hierarchy
+2020-10-30 16:00:07.393 logback [restartedMain] DEBUG org.apache.ibatis.logging.LogFactory - Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter.
+2020-10-30 16:00:07.399 logback [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - Skipping MapperFactoryBean with name 'dianZanMapper' and 'com.fz.zf.mapper.DianZanMapper' mapperInterface. Bean already defined with the same name!
+2020-10-30 16:00:07.400 logback [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - Skipping MapperFactoryBean with name 'systemAdminMapper' and 'com.fz.zf.mapper.SystemAdminMapper' mapperInterface. Bean already defined with the same name!
+2020-10-30 16:00:07.400 logback [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - Skipping MapperFactoryBean with name 'videoCategoryMapper' and 'com.fz.zf.mapper.VideoCategoryMapper' mapperInterface. Bean already defined with the same name!
+2020-10-30 16:00:07.400 logback [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - Skipping MapperFactoryBean with name 'videoListMapper' and 'com.fz.zf.mapper.VideoListMapper' mapperInterface. Bean already defined with the same name!
+2020-10-30 16:00:07.400 logback [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.fz.zf.*]' package. Please check your configuration.
+2020-10-30 16:00:07.924 logback [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-10-30 16:00:08.348 logback [restartedMain] WARN  o.s.c.a.ConfigurationClassEnhancer - @Bean method BeanConfig.springUtils is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
+2020-10-30 16:00:08.554 logback [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1f955010] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-10-30 16:00:09.585 logback [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9999 (http)
+2020-10-30 16:00:09.604 logback [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9999"]
+2020-10-30 16:00:09.616 logback [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2020-10-30 16:00:09.616 logback [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet Engine: Apache Tomcat/8.5.39
+2020-10-30 16:00:09.621 logback [localhost-startStop-1] INFO  o.a.c.core.AprLifecycleListener - Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.5].
+2020-10-30 16:00:09.621 logback [localhost-startStop-1] INFO  o.a.c.core.AprLifecycleListener - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2020-10-30 16:00:09.621 logback [localhost-startStop-1] INFO  o.a.c.core.AprLifecycleListener - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2020-10-30 16:00:09.625 logback [localhost-startStop-1] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+2020-10-30 16:00:09.746 logback [localhost-startStop-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2020-10-30 16:00:09.746 logback [localhost-startStop-1] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 4380 ms
+2020-10-30 16:00:09.832 logback [localhost-startStop-1] INFO  o.s.b.w.s.ServletRegistrationBean - Servlet dispatcherServlet mapped to [/]
+2020-10-30 16:00:09.836 logback [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'characterEncodingFilter' to: [/*]
+2020-10-30 16:00:09.836 logback [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2020-10-30 16:00:09.836 logback [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2020-10-30 16:00:09.836 logback [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean - Mapping filter: 'requestContextFilter' to: [/*]
+2020-10-30 16:00:10.264 logback [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2020-10-30 16:00:10.278 logback [restartedMain] WARN  c.z.hikari.util.DriverDataSource - Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2020-10-30 16:00:10.582 logback [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2020-10-30 16:00:11.805 logback [restartedMain] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-10-30 16:00:11.975 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4a316dc7: startup date [Fri Oct 30 16:00:05 CST 2020]; root of context hierarchy
+2020-10-30 16:00:12.052 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/user/register]}" onto public com.fz.zf.util.ApiResult com.fz.zf.app.LoginController.register(com.fz.zf.model.app.User)
+2020-10-30 16:00:12.053 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/user/login]}" onto public com.fz.zf.util.ApiResult com.fz.zf.app.LoginController.login(com.fz.zf.model.app.User)
+2020-10-30 16:00:12.054 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/me/logout],methods=[POST]}" onto public com.fz.zf.util.ApiResult com.fz.zf.app.MeController.logout()
+2020-10-30 16:00:12.055 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/video/category/list]}" onto public java.lang.Object com.fz.zf.app.VideoCategoryController.list(com.ex.framework.data.Record)
+2020-10-30 16:00:12.055 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/video/list],methods=[POST]}" onto public java.lang.Object com.fz.zf.app.VideoListController.list(com.ex.framework.data.Record)
+2020-10-30 16:00:12.055 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/video/updateByVid],methods=[POST]}" onto public java.lang.Object com.fz.zf.app.VideoListController.updateByVid(com.ex.framework.data.Record)
+2020-10-30 16:00:12.056 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/video/saveList],methods=[POST]}" onto public java.lang.Object com.fz.zf.app.VideoListController.saveList(com.ex.framework.data.Record)
+2020-10-30 16:00:12.057 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2020-10-30 16:00:12.057 logback [restartedMain] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2020-10-30 16:00:12.078 logback [restartedMain] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-10-30 16:00:12.078 logback [restartedMain] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-10-30 16:00:12.078 logback [restartedMain] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/download/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2020-10-30 16:00:12.088 logback [restartedMain] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in appGlobalExceptionHandler
+2020-10-30 16:00:12.773 logback [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2020-10-30 16:00:12.795 logback [restartedMain] INFO  o.s.j.e.a.AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+2020-10-30 16:00:12.796 logback [restartedMain] INFO  o.s.j.e.a.AnnotationMBeanExporter - Bean with name 'dataSource' has been autodetected for JMX exposure
+2020-10-30 16:00:12.800 logback [restartedMain] INFO  o.s.j.e.a.AnnotationMBeanExporter - Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2020-10-30 16:00:12.818 logback [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9999"]
+2020-10-30 16:00:12.824 logback [restartedMain] INFO  o.a.tomcat.util.net.NioSelectorPool - Using a shared selector for servlet write/read
+2020-10-30 16:00:12.855 logback [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 9999 (http) with context path ''
+2020-10-30 16:00:12.859 logback [restartedMain] INFO  com.fz.zf.BootZfApplication - Started BootZfApplication in 8.038 seconds (JVM running for 8.866)
+2020-10-30 16:03:53.194 logback [http-nio-9999-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+2020-10-30 16:03:53.194 logback [http-nio-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization started
+2020-10-30 16:03:53.210 logback [http-nio-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization completed in 16 ms
+2020-10-30 16:03:53.670 logback [http-nio-9999-exec-1] INFO  io.lettuce.core.EpollProvider - Starting without optional epoll library
+2020-10-30 16:03:53.671 logback [http-nio-9999-exec-1] INFO  io.lettuce.core.KqueueProvider - Starting without optional kqueue library
+2020-10-30 16:03:54.013 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:741117bf-e716-4e6d-8752-100302e35ffa
+2020-10-30 16:03:54.013 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:fe5e917e-a392-4ede-8121-33f3786cec38
+2020-10-30 16:03:54.022 logback [http-nio-9999-exec-1] ERROR c.f.z.c.a.AppGlobalExceptionHandler - ----------------------token异常----------------------
+2020-10-30 16:03:54.121 logback [http-nio-9999-exec-1] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved exception caused by handler execution: com.fz.zf.config.app.AuthException: token失效
+2020-10-30 16:04:01.624 logback [http-nio-9999-exec-3] INFO  com.fz.zf.app.LoginController - --------------redis存token----------------：8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.207 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.208 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.208 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:02.209 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:02.685 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.685 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.685 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:02.685 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:02.711 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.711 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.711 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:02.711 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:02.724 logback [http-nio-9999-exec-7] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.724 logback [http-nio-9999-exec-7] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.724 logback [http-nio-9999-exec-7] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:02.724 logback [http-nio-9999-exec-7] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:02.736 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.736 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:02.736 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:02.736 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:03.393 logback [http-nio-9999-exec-8] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:03.393 logback [http-nio-9999-exec-8] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:03.393 logback [http-nio-9999-exec-8] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:03.393 logback [http-nio-9999-exec-8] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:03.743 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:03.743 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:03.743 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:03.743 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:03.992 logback [http-nio-9999-exec-10] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:03.992 logback [http-nio-9999-exec-10] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:03.992 logback [http-nio-9999-exec-10] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:03.992 logback [http-nio-9999-exec-10] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:04.523 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:04.523 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:04.523 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:04.523 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:06.968 logback [http-nio-9999-exec-3] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:06.969 logback [http-nio-9999-exec-3] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:06.969 logback [http-nio-9999-exec-3] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:06.969 logback [http-nio-9999-exec-3] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:2s
+2020-10-30 16:04:11.524 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:11.524 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:8f21421e-bc34-4899-8ab6-f078d566e6ce
+2020-10-30 16:04:11.524 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:11.524 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:4s
+2020-10-30 16:04:32.567 logback [http-nio-9999-exec-7] INFO  com.fz.zf.app.LoginController - --------------redis存token----------------：4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:32.988 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:32.988 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:32.989 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:32.989 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:33.296 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:33.296 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:33.296 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:33.296 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:33.309 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:33.309 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:33.309 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:33.309 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:33.317 logback [http-nio-9999-exec-8] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:33.317 logback [http-nio-9999-exec-8] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:33.317 logback [http-nio-9999-exec-8] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:33.317 logback [http-nio-9999-exec-8] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:33.341 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:33.342 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:33.342 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:33.342 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:34.006 logback [http-nio-9999-exec-10] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:34.006 logback [http-nio-9999-exec-10] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:34.006 logback [http-nio-9999-exec-10] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:34.006 logback [http-nio-9999-exec-10] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:34.324 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:34.324 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:34.324 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:34.324 logback [http-nio-9999-exec-1] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:34.556 logback [http-nio-9999-exec-3] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:34.556 logback [http-nio-9999-exec-3] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:34.556 logback [http-nio-9999-exec-3] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:34.556 logback [http-nio-9999-exec-3] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:35.064 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:35.064 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:35.064 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:35.065 logback [http-nio-9999-exec-5] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:0s
+2020-10-30 16:04:39.890 logback [http-nio-9999-exec-7] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:39.891 logback [http-nio-9999-exec-7] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:39.891 logback [http-nio-9999-exec-7] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:39.891 logback [http-nio-9999-exec-7] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:4s
+2020-10-30 16:04:43.323 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:43.324 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:43.324 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:43.324 logback [http-nio-9999-exec-2] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:3s
+2020-10-30 16:04:46.364 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:46.364 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:46.364 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:46.364 logback [http-nio-9999-exec-6] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:3s
+2020-10-30 16:04:51.279 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:51.279 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:51.279 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:51.279 logback [http-nio-9999-exec-4] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:4s
+2020-10-30 16:04:54.676 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------前端传过来token----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:54.676 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis取出token-----------------:4d933973-7f06-42c3-98ae-b8330a136856
+2020-10-30 16:04:54.676 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------redis_token和token相等----------------
+2020-10-30 16:04:54.676 logback [http-nio-9999-exec-9] INFO  com.fz.zf.config.app.AuthInterceptor - ----------------距离上次登录时间----------------:3s
+2020-10-30 16:17:21.277 logback [Thread-25] INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4a316dc7: startup date [Fri Oct 30 16:00:05 CST 2020]; root of context hierarchy
+2020-10-30 16:17:21.290 logback [Thread-25] INFO  o.s.j.e.a.AnnotationMBeanExporter - Unregistering JMX-exposed beans on shutdown
+2020-10-30 16:17:21.291 logback [Thread-25] INFO  o.s.j.e.a.AnnotationMBeanExporter - Unregistering JMX-exposed beans
+2020-10-30 16:17:22.443 logback [Thread-25] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2020-10-30 16:17:22.470 logback [Thread-25] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
