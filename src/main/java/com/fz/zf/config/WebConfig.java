@@ -74,6 +74,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/plate/user/loginByPhone",
                 "/plate/user/loginWeiXin",
                 "/plate/user/register",
+                "/plate/user/canUseName",
                 "/plate/me/getPhoneCode");
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")

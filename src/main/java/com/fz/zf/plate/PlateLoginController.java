@@ -17,10 +17,7 @@ import com.fz.zf.util.RegexUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -211,6 +208,18 @@ public class PlateLoginController {
 
     }
 
+    /**
+     * 注册时，判断用户名是否可用
+     *
+     * @param name
+     * @return
+     */
+    @PostMapping("canUseName")
+    public ApiResult canUseName(@RequestParam String name) {
+        SysAdmin model = sysAdminService.get(new QueryWrapper<SysAdmin>().eq("name", name));
+        return model == null ? ApiResult.success() : ApiResult.error();
+    }
+
 
     /**
      * 手机号登陆
@@ -287,10 +296,10 @@ public class PlateLoginController {
         SysAdmin sysAdmin = sysAdminService.get(new QueryWrapper<SysAdmin>()
                 .eq("openid", openid));
         if (sysAdmin != null) {
-            if (!StringUtils.equals(sysAdmin.getHeader_path(), avatarUrl)){
+            if (!StringUtils.equals(sysAdmin.getHeader_path(), avatarUrl)) {
                 sysAdmin.setHeader_path(avatarUrl);
             }
-            if (!StringUtils.equals(sysAdmin.getNickName(), nickName)){
+            if (!StringUtils.equals(sysAdmin.getNickName(), nickName)) {
                 sysAdmin.setNickName(nickName);
             }
 

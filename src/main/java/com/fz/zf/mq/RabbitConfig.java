@@ -77,6 +77,11 @@ public class RabbitConfig {
         return new DirectExchange(EXCHANGE_A);
     }
 
+    @Bean
+    public DirectExchange exchangeB() {
+        return new DirectExchange(EXCHANGE_B);
+    }
+
     /**
      * 获取队列A
      * @return
@@ -86,9 +91,26 @@ public class RabbitConfig {
         return new Queue(QUEUE_A, true); //队列持久
     }
 
+    /**
+     * 获取队列B
+     *
+     * @return
+     */
+    @Bean
+    public Queue queueB() {
+        return new Queue(QUEUE_B, true); //队列持久
+    }
+
     @Bean
     public Binding binding() {
         return BindingBuilder.bind(queueA()).to(defaultExchange()).with(RabbitConfig.ROUTINGKEY_A);
+    }
+
+    @Bean
+    public Binding bindingB() {
+        return BindingBuilder.bind(queueB())
+                             .to(exchangeB())
+                             .with(RabbitConfig.ROUTINGKEY_B);
     }
 
 }

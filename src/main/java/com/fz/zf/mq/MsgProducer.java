@@ -7,6 +7,7 @@ import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -16,6 +17,7 @@ public class MsgProducer implements RabbitTemplate.ConfirmCallback {
 
     //由于rabbitTemplate的scope属性设置为ConfigurableBeanFactory.SCOPE_PROTOTYPE，所以不能自动注入
     private RabbitTemplate rabbitTemplate;
+
     /**
      * 构造方法注入rabbitTemplate
      */
@@ -26,11 +28,20 @@ public class MsgProducer implements RabbitTemplate.ConfirmCallback {
     }
 
     public void sendMsg(String content) {
-        CorrelationData correlationId = new CorrelationData(UUID.randomUUID().toString());
+        CorrelationData correlationId = new CorrelationData(UUID.randomUUID()
+                                                                .toString());
         //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列A
         rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_A, RabbitConfig.ROUTINGKEY_A, content, correlationId);
         // rabbitTemplate.convertAndSend(FanoutRabbitConfig.Fanout_Exchange,"",content);
     }
+
+    public void sendList(List content) {
+        CorrelationData correlationId = new CorrelationData(UUID.randomUUID()
+                                                                .toString());
+        //把消息放入ROUTINGKEY_B对应的队列当中去，对应的是队列B
+        rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_B, RabbitConfig.ROUTINGKEY_B, content, correlationId);
+    }
+
     /**
      * 回调
      */

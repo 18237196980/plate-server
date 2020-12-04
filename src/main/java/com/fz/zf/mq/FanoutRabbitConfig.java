@@ -12,21 +12,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-
-@Configuration
+/**
+ * 广播
+ */
+//@Configuration
 public class FanoutRabbitConfig {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    //@Value("${spring.rabbitmq.host}")
+    @Value("${spring.rabbitmq.host}")
     private String host;
 
-    //@Value("${spring.rabbitmq.port}")
+    @Value("${spring.rabbitmq.port}")
     private int port;
 
-    //@Value("${spring.rabbitmq.username}")
+    @Value("${spring.rabbitmq.username}")
     private String username;
 
-    //@Value("${spring.rabbitmq.password}")
+    @Value("${spring.rabbitmq.password}")
     private String password;
 
 
