@@ -55,6 +55,23 @@ public class CodeUtils {
         return result;
     }
 
+    /**
+     * 生成车牌字母简称
+     *
+     * @return
+     */
+    public static String getABC(int x) {
+        String ZiMu = "ABCDEFGHJKMNPQRSTVWXYZ";
+        String result = "";
+        Random random = new Random();
+        for (int i = 0; i < x; i++) {
+            int index = random.nextInt(ZiMu.length());
+            char c = ZiMu.charAt(index);
+            result += c;
+        }
+        return result;
+    }
+
     public static int getNum(int start, int end) {
         return (int) (Math.random() * (end - start + 1) + start);
     }

@@ -22,16 +22,16 @@ public class TimerCronService {
     @Autowired
     MsgProducer msgProducer;
 
-    @Scheduled(cron = "0/10 * * * * *")
+    @Scheduled(cron = "0/12 * * * * *")
     public void add() {
         log.info("进入定时--------------------------------");
         List<Plate> list = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
             Plate model = new Plate();
             model.setId(IDUtils.getSequenceStr());
-            model.setCode(CodeUtils.getNike(1) + "A" + CodeUtils.getCheckCode());
-            model.setApply_address("4-1-1南");
-            model.setApply_person("关羽");
+            model.setCode(CodeUtils.getNike(1) + CodeUtils.getABC(1) + CodeUtils.getCheckCode());
+            model.setApply_address("3-2-5南");
+            model.setApply_person("刘公-" + CodeUtils.getNike(1));
             model.setCreate_user("1");
             model.setPhone(CodeUtils.getTel());
             model.setCreate_time(LocalDateTime.now());

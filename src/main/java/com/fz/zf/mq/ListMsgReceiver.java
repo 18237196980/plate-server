@@ -18,7 +18,7 @@ public class ListMsgReceiver {
 
     @RabbitListener(queues = RabbitConfig.QUEUE_B)
     public void process(List content) {
-        log.info("接收处理【队列B】当中的消息： " + content);
+        log.info("接收处理【队列B】当中的消息----------");
         plateService.add(content);
     }
 
