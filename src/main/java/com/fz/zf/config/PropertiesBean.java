@@ -22,13 +22,13 @@ public class PropertiesBean {
     /**
      * appID
      */
-    @Value("${appID}")
-    public String appID;
+    @Value("${appid}")
+    public String appid;
 
     /**
      * appSecret
      */
-    @Value("${appSecret}")
-    public String appSecret;
+    @Value("${secret}")
+    public String secret;
 
 }

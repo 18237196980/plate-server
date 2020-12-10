@@ -3,6 +3,7 @@ package com.fz.zf.config;
 import com.ex.framework.util.Lang;
 import com.fz.zf.config.app.AuthInterceptor;
 import com.fz.zf.config.app.CorsFilter;
+import com.fz.zf.config.xss.XSSEscapeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +13,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.DispatcherType;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 使注解@RecordBody生效
@@ -64,6 +68,29 @@ public class WebConfig implements WebMvcConfigurer {
         return b;
     }
 
+    /**
+     * XSS过滤拦截器
+     */
+    @Bean
+    public FilterRegistrationBean xssFilterRegistrationBean() {
+
+        //注意：1个*号
+        List<String> excludes = Lang.list();
+
+        XSSEscapeFilter filter = new XSSEscapeFilter();
+        filter.excludes = excludes;
+
+        FilterRegistrationBean<XSSEscapeFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(filter);
+        bean.setOrder(1);
+        bean.setEnabled(true);
+        bean.setName("xssFilter");
+        bean.addUrlPatterns("/*");
+        bean.setDispatcherTypes(DispatcherType.REQUEST);
+
+        return bean;
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> list = Lang.list(
@@ -75,6 +102,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/plate/user/loginWeiXin",
                 "/plate/user/register",
                 "/plate/user/canUseName",
+                "/plate/user/getOpedId",
                 "/plate/me/getPhoneCode");
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")

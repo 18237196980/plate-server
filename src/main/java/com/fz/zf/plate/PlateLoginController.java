@@ -1,14 +1,17 @@
 package com.fz.zf.plate;
 
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ex.framework.data.IDUtils;
 import com.ex.framework.data.Record;
 import com.ex.framework.data.RecordBody;
 import com.ex.framework.util.SpringUtils;
+import com.fz.zf.config.PropertiesBean;
 import com.fz.zf.model.app.SysAdmin;
 import com.fz.zf.model.app.User;
 import com.fz.zf.model.common.Constast;
-import com.fz.zf.mq.MsgProducer;
 import com.fz.zf.service.app.SysAdminService;
 import com.fz.zf.util.ApiResult;
 import com.fz.zf.util.MD5;
@@ -21,11 +24,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
 /**
- * 车牌
+ * 车牌(登陆、注册)
  */
 @RestController
 @RequestMapping("/plate/user")
@@ -36,6 +41,8 @@ public class PlateLoginController {
     SysAdminService sysAdminService;
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    PropertiesBean propertiesBean;
 
     /**
      * android 车牌 账号密码登陆
@@ -326,6 +333,35 @@ public class PlateLoginController {
             } else {
                 return ApiResult.error("登录失败");
             }
+        }
+    }
+
+    /**
+     * 微信小程序授权登陆
+     *
+     * @return
+     */
+    @PostMapping("getOpedId")
+    public ApiResult getOpedId(String code) {
+        try {
+            if (StringUtils.isEmpty(code)) {
+                return ApiResult.error("code不能为空");
+            }
+            String url = "https://api.weixin.qq.com/sns/jscode2session";
+            Map<String, Object> params = new HashMap<>();
+            params.put("appid", propertiesBean.appid);
+            params.put("secret", propertiesBean.secret);
+            params.put("js_code", code);
+            params.put("grant_type", "authorization_code");
+
+            String res = HttpUtil.post(url, params);
+            JSONObject json = JSONUtil.parseObj(res);
+            String openid = json.getStr("openid");
+            log.info("openid---------------------------：" + openid);
+            return ApiResult.success(openid);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.error("退出登陆失败");
         }
     }
 
