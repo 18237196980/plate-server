@@ -337,7 +337,7 @@ public class PlateLoginController {
     }
 
     /**
-     * 微信小程序授权登陆
+     * 微信小程序授权登陆(code换openid)
      *
      * @return
      */
