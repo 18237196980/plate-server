@@ -149,10 +149,18 @@
             <version>${jsoup.version}</version>
         </dependency>
 
+        <!--微信http请求-->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
+        </dependency>
+
+        <!--支付宝sdk-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.10.167.ALL</version>
         </dependency>
 
 

@@ -31,4 +31,25 @@ public class PropertiesBean {
     @Value("${secret}")
     public String secret;
 
+    /**
+     * 支付宝gateway
+     */
+    @Value("${alipay-gateway}")
+    public String alipayGateway;
+    /**
+     * 支付宝小程序appid
+     */
+    @Value("${alipay-xcx-appid}")
+    public String alipayXcxAppid;
+    /**
+     * 支付宝小程序公钥
+     */
+    @Value("${alipay-xcx-public-key}")
+    public String alipayXcxPublicKey;
+    /**
+     * 支付宝小程序应用私钥：
+     */
+    @Value("${alipay-xcx-private-key}")
+    public String alipayXcxPrivateKey;
+
 }
