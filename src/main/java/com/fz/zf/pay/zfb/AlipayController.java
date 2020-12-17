@@ -1,9 +1,12 @@
 package com.fz.zf.pay.zfb;
 
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
+import com.alipay.api.AlipayConstants;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
@@ -30,9 +33,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/ali")
 @RestController
@@ -74,7 +81,7 @@ public class AlipayController {
         model.setTotalAmount(order_amount);
         model.setProductCode("QUICK_MSECURITY_PAY");
         request.setBizModel(model);
-        request.setNotifyUrl("http://www.demo.com");
+        request.setNotifyUrl("http://39.99.161.198:9876/ali/notifyOrder");
         try {
             //这里和普通的接口调用不同，使用的是sdkExecute
             AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
@@ -88,6 +95,46 @@ public class AlipayController {
             e.printStackTrace();
             return ApiResult.error();
         }
+    }
+
+    /**
+     * 支付宝的回调接口
+     *
+     * @param request
+     */
+    @RequestMapping("/notifyOrder")
+    public void notifyOrderInfo(HttpServletRequest request) {
+
+        log.info("进入回调通知------------------------------------------");
+
+        if ("TRADE_SUCCESS".equals(request.getParameter("trade_status"))) {
+            log.info("交易成功------------------------------------------");
+
+            Enumeration<?> pNames = request.getParameterNames();
+            Map<String, String> param = new HashMap<String, String>();
+            try {
+                while (pNames.hasMoreElements()) {
+                    String pName = (String) pNames.nextElement();
+                    param.put(pName, request.getParameter(pName));
+                }
+
+                boolean signVerified = AlipaySignature.rsaCheckV1(param, prop.alipayAppPublicKey,
+                        AlipayConstants.CHARSET_UTF8, "RSA2"); // 校验签名是否正确
+
+                if (signVerified) {
+                    // TODO 验签成功后
+                    // 按照支付结果异步通知中的描述，对支付结果中的业务内容进行1\2\3\4二次校验，校验成功后在response中返回success，校验失败返回failure
+                    System.out.println("订单支付成功：" + JSON.toJSONString(param));
+                } else {
+                    // TODO 验签失败则记录异常日志，并在response中返回failure.
+                    log.info("验签失败--------");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.info("验签失败2--------");
+            }
+        }
+        return;
     }
 
     /**
