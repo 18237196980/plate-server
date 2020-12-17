@@ -3,7 +3,7 @@ package com.fz.zf.service.app;
 import com.ex.framework.base.BaseCRUDService;
 import com.ex.framework.data.Record;
 import com.ex.framework.web.ApiResult;
-import com.fz.zf.mapper.SystemAdminMapper;
+import com.fz.zf.mapper.SysAdminMapper;
 import com.fz.zf.model.app.SysAdmin;
 import com.fz.zf.util.MD5;
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
-public class SysAdminService extends BaseCRUDService<SystemAdminMapper, SysAdmin> {
+public class SysAdminService extends BaseCRUDService<SysAdminMapper, SysAdmin> {
 
     @Transactional
     public ApiResult updatePwd(Record record) {

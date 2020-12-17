@@ -2,6 +2,9 @@ package com.fz.zf.model.app;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,7 +19,9 @@ import java.util.Date;
  * @since 2018-12-03
  */
 
-@TableName("sys_admin")
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class SysAdmin implements Serializable {
 
     private static final long serialVersionUID = 1L;

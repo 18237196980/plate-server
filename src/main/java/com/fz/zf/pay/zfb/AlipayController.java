@@ -1,13 +1,204 @@
 package com.fz.zf.pay.zfb;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.request.AlipaySystemOauthTokenRequest;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.alipay.api.response.AlipaySystemOauthTokenResponse;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.ex.framework.data.IDUtils;
+import com.ex.framework.data.Record;
+import com.ex.framework.data.RecordBody;
+import com.ex.framework.util.Lang;
 import com.fz.zf.config.PropertiesBean;
+import com.fz.zf.mapper.Q;
+import com.fz.zf.model.app.GoodOrder;
+import com.fz.zf.model.app.SysAdmin;
+import com.fz.zf.service.app.GoodOrderService;
+import com.fz.zf.service.app.SysAdminService;
+import com.fz.zf.util.ApiResult;
+import com.fz.zf.util.CodeUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/ali/pay")
-@ResponseBody
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@RequestMapping("/ali")
+@RestController
+@Slf4j
+@SuppressWarnings("all")
 public class AlipayController {
     @Autowired
-    PropertiesBean propertiesBean;
+    PropertiesBean prop;
+    @Autowired
+    SysAdminService sysAdminService;
+    @Autowired
+    GoodOrderService goodOrderService;
+
+    /**
+     * 支付宝 app支付
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("getPerOrderId")
+    public ApiResult getPerOrderId(@RecordBody Record record) {
+        String order_num = record.getString("order_num");
+        String order_amount = record.getString("order_amount");
+
+        if (StringUtils.isEmpty(order_amount)) {
+            log.info("支付金额为空----------------------------");
+        }
+
+        //实例化客户端
+        AlipayClient alipayClient = new DefaultAlipayClient(prop.alipayGateway, prop.alipayAppAppid, prop.alipayAppPrivateKey, "json", "UTF-8", prop.alipayAppPublicKey, "RSA2");
+        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
+        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
+        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+        model.setBody("测试测试");
+        model.setSubject("App支付测试");
+        model.setOutTradeNo(order_num);
+        model.setTimeoutExpress("30m");
+        model.setTotalAmount(order_amount);
+        model.setProductCode("QUICK_MSECURITY_PAY");
+        request.setBizModel(model);
+        request.setNotifyUrl("http://www.demo.com");
+        try {
+            //这里和普通的接口调用不同，使用的是sdkExecute
+            AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
+            String pid = response.getBody();
+            Record r = Record.build()
+                             .set("pid", pid)
+                             .set("orderId", order_num);
+            log.info("获取支付宝userid:" + pid); // pid 可以直接给客户端请求，无需再做处理。
+            return ApiResult.success(r);
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+            return ApiResult.error();
+        }
+    }
+
+    /**
+     * 支付宝 app查询订单支付状态
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("queryAppOrder")
+    public ApiResult queryAppOrder(@RecordBody Record record) {
+        String orderId = record.getString("orderId");
+
+        //实例化客户端
+        AlipayClient alipayClient = new DefaultAlipayClient(prop.alipayGateway, prop.alipayAppAppid, prop.alipayAppPrivateKey, "json", "UTF-8", prop.alipayAppPublicKey, "RSA2");
+
+        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+        request.setBizContent("{" +
+                "\"out_trade_no\":\"" + orderId + "\"," +
+                "      \"query_options\":[" +
+                "        \"trade_settle_info\"" +
+                "      ]" +
+                "  }");
+        try {
+            AlipayTradeQueryResponse response = alipayClient.execute(request);
+            if (response.isSuccess()) {
+                String tradeStatus = response.getTradeStatus();
+                log.info("tradeStatus：----------" + tradeStatus);
+
+                if ("TRADE_SUCCESS".equals(tradeStatus) || "TRADE_FINISH".equals(tradeStatus)) {
+                    log.info("查询订单[{}]支付成功", orderId);
+                    log.info("可以根据订单id更新订单状态了--------------");
+                    GoodOrder goodOrder = goodOrderService.get(Q.GoodOrder()
+                                                                .eq("order_num", orderId));
+                    if (goodOrder == null) {
+                        return ApiResult.error("订单不存在");
+                    } else {
+                        goodOrder.setStatus(1);
+                        goodOrderService.updateById(goodOrder);
+                        return ApiResult.success();
+                    }
+                } else {
+                    return ApiResult.error("查询订单失败");
+                }
+            } else {
+                log.info("调用失败");
+                return ApiResult.error();
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        return ApiResult.error();
+    }
+
+    @PostMapping("getOpenid")
+    public ApiResult getOpenid(String code) {
+        AlipayClient client = new DefaultAlipayClient(
+                prop.alipayGateway,
+                prop.alipayXcxAppid,
+                prop.alipayXcxPrivateKey,
+                "json",
+                "UTF-8",
+                prop.alipayXcxPublicKey,
+                "RSA2");
+
+        log.info("code---------------------:" + code);
+
+        AlipaySystemOauthTokenRequest request = new AlipaySystemOauthTokenRequest();
+        request.setCode(code);
+        request.setGrantType("authorization_code");
+
+        try {
+            AlipaySystemOauthTokenResponse response = client.execute(request);
+            if (response.isSuccess()) {
+                String userId = response.getUserId();
+
+                log.info("userId---------------------:" + userId);
+
+                SysAdmin model = sysAdminService.get(new QueryWrapper<SysAdmin>().eq("openid", userId));
+                if (model == null) {
+                    // 添加
+                    SysAdmin sysAdmin = new SysAdmin();
+                    sysAdmin.setId(IDUtils.getSequenceStr());
+                    sysAdmin.setOpenid(userId);
+                    sysAdmin.setCreate_time(LocalDateTime.now());
+                    sysAdminService.add(sysAdmin);
+                }
+                return ApiResult.success(userId);
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+            return ApiResult.error();
+        }
+        return ApiResult.error();
+    }
+
+    /**
+     * 查询订单列表
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("getOrderList")
+    public ApiResult getOrderList(@RecordBody Record record) {
+        String uid = record.getString("uid");
+        List<GoodOrder> list = Lang.list();
+        if (StringUtils.isEmpty(uid)) {
+            list = goodOrderService.list();
+        } else {
+            list = goodOrderService.list(Q.GoodOrder()
+                                          .eq("uid", uid));
+        }
+        return ApiResult.success(list);
+    }
 }

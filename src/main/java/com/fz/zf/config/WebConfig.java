@@ -93,7 +93,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        /*List<String> list = Lang.list(
+        List<String> list = Lang.list(
                 "/user/login",
                 "/user/register",
                 "/download/**",
@@ -104,10 +104,10 @@ public class WebConfig implements WebMvcConfigurer {
                 "/plate/user/canUseName",
                 "/plate/user/getOpedId",
                 "/plate/me/getPhoneCode",
-                "/ali/getOpenid");
+                "/ali/**");
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns(list);*/
+                .excludePathPatterns(list);
     }
 
 }

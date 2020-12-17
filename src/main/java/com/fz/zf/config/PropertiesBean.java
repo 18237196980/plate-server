@@ -52,4 +52,20 @@ public class PropertiesBean {
     @Value("${alipay-xcx-private-key}")
     public String alipayXcxPrivateKey;
 
+    /**
+     * app支付宝支付appid
+     */
+    @Value("${alipay-app-appid}")
+    public String alipayAppAppid;
+    /**
+     * 支付宝app支付公钥
+     */
+    @Value("${alipay-app-public-key}")
+    public String alipayAppPublicKey;
+    /**
+     * 支付宝app支付应用私钥：
+     */
+    @Value("${alipay-app-private-key}")
+    public String alipayAppPrivateKey;
+
 }
