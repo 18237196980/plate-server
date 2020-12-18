@@ -1,5 +1,6 @@
 package com.fz.zf.util;
 
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class CodeUtils {
@@ -19,6 +20,25 @@ public class CodeUtils {
             result += c;
         }
         return result;
+    }
+
+    /**
+     * 获取金额
+     *
+     * @param min
+     * @param max
+     * @return
+     */
+    public static BigDecimal getRandomBigDecimal(BigDecimal min, BigDecimal max) {
+        float minF = min.floatValue();
+        float maxF = max.floatValue();
+
+
+        //生成随机数
+        BigDecimal db = new BigDecimal(Math.random() * (maxF - minF) + minF);
+
+        //返回保留两位小数的随机数。不进行四舍五入
+        return db.setScale(2, BigDecimal.ROUND_DOWN);
     }
 
     /**

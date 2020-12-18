@@ -25,7 +25,6 @@ import com.fz.zf.model.app.SysAdmin;
 import com.fz.zf.service.app.GoodOrderService;
 import com.fz.zf.service.app.SysAdminService;
 import com.fz.zf.util.ApiResult;
-import com.fz.zf.util.CodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -63,6 +61,19 @@ public class AlipayController {
     public ApiResult getPerOrderId(@RecordBody Record record) {
         String order_num = record.getString("order_num");
         String order_amount = record.getString("order_amount");
+
+        GoodOrder goodOrder = goodOrderService.get(Q.GoodOrder()
+                                                    .eq("order_num", order_num)
+                                                    .eq("status", 1));
+        boolean exists = goodOrderService.exists(Q.GoodOrder()
+                                                  .eq("order_num", order_num));
+        if (!exists) {
+            return ApiResult.error("订单不存在");
+        }
+        if (goodOrder != null) {
+            log.info("订单已经支付过--------------");
+            return ApiResult.error("订单已经支付过");
+        }
 
         if (StringUtils.isEmpty(order_amount)) {
             log.info("支付金额为空----------------------------");
@@ -98,17 +109,17 @@ public class AlipayController {
     }
 
     /**
-     * 支付宝的回调接口
+     * 支付宝的支付结果回调接口
      *
      * @param request
      */
     @RequestMapping("/notifyOrder")
-    public void notifyOrderInfo(HttpServletRequest request) {
+    public String notifyOrderInfo(HttpServletRequest request) {
+        String tradeStatus = request.getParameter("trade_status");
 
         log.info("进入回调通知------------------------------------------");
-
-        if ("TRADE_SUCCESS".equals(request.getParameter("trade_status"))) {
-            log.info("交易成功------------------------------------------");
+        if ("TRADE_SUCCESS".equals(tradeStatus) || "TRADE_FINISH".equals(tradeStatus)) {
+            log.info("TRADE_SUCCESS------------------------------------------");
 
             Enumeration<?> pNames = request.getParameterNames();
             Map<String, String> param = new HashMap<String, String>();
@@ -125,20 +136,36 @@ public class AlipayController {
                     // TODO 验签成功后
                     // 按照支付结果异步通知中的描述，对支付结果中的业务内容进行1\2\3\4二次校验，校验成功后在response中返回success，校验失败返回failure
                     System.out.println("订单支付成功：" + JSON.toJSONString(param));
+
+                    log.info("可以根据订单id更新订单状态了--------------");
+                    String orderId = param.get("out_trade_no");
+                    GoodOrder goodOrder = goodOrderService.get(Q.GoodOrder()
+                                                                .eq("order_num", orderId)
+                                                                .eq("status", 0));
+                    if (goodOrder == null) {
+                        log.info("订单不存在--------------");
+                        return "failure";
+                    } else {
+                        goodOrder.setStatus(1);
+                        goodOrderService.updateById(goodOrder);
+                        return "success";
+                    }
                 } else {
                     // TODO 验签失败则记录异常日志，并在response中返回failure.
                     log.info("验签失败--------");
+                    return "failure";
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 log.info("验签失败2--------");
+                return "failure";
             }
         }
-        return;
+        return "failure";
     }
 
     /**
-     * 支付宝 app查询订单支付状态
+     * 支付宝 app查询订单支付状态(主动去支付宝查询支付结果)
      *
      * @param record
      * @return
