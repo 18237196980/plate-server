@@ -9,6 +9,7 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
@@ -106,6 +107,41 @@ public class AlipayController {
             e.printStackTrace();
             return ApiResult.error();
         }
+    }
+
+    /**
+     * 支付宝 app支付
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("webPay")
+    public ApiResult webPay(@RecordBody Record record) {
+        String order_num = record.getString("order_num");
+        String order_amount = "2";
+
+        //实例化客户端
+        AlipayClient alipayClient = new DefaultAlipayClient(prop.alipayGateway, prop.alipayAppAppid, prop.alipayAppPrivateKey, "json", "UTF-8", prop.alipayAppPublicKey, "RSA2");  //获得初始化的AlipayClient
+        AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest(); //创建API对应的request
+        alipayRequest.setReturnUrl("http://127.0.0.1:8848/web-pay/index.html");
+        alipayRequest.setNotifyUrl("http://demo.com"); //在公共参数中设置回跳和通知地址
+        alipayRequest.setBizContent("{" +
+                "    \"out_trade_no\":\"20150320010108845\"," +
+                "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
+                "    \"total_amount\":2.11," +
+                "    \"subject\":\"Iphone6 16G\"," +
+                "    \"body\":\"Iphone6 16G\"," +
+                "    }" +
+                "  }"); //填充业务参数
+        String form = "";
+        try {
+            form = alipayClient.pageExecute(alipayRequest)
+                               .getBody();  //调用SDK生成表单
+            return ApiResult.success(form);
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        return ApiResult.error();
     }
 
     /**

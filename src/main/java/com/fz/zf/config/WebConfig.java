@@ -104,6 +104,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/plate/user/canUseName",
                 "/plate/user/getOpedId",
                 "/plate/me/getPhoneCode",
+                "/ali/webPay",
                 "/ali/**");
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")
