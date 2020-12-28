@@ -7,12 +7,10 @@ import com.alipay.api.AlipayConstants;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.api.request.AlipaySystemOauthTokenRequest;
-import com.alipay.api.request.AlipayTradeAppPayRequest;
-import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.alipay.api.request.*;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.alipay.api.response.AlipayTradePayResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ex.framework.data.IDUtils;
@@ -26,6 +24,7 @@ import com.fz.zf.model.app.SysAdmin;
 import com.fz.zf.service.app.GoodOrderService;
 import com.fz.zf.service.app.SysAdminService;
 import com.fz.zf.util.ApiResult;
+import com.fz.zf.util.CodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,29 +109,28 @@ public class AlipayController {
     }
 
     /**
-     * 支付宝 app支付
+     * 支付宝 网站支付
      *
      * @param record
      * @return
      */
     @PostMapping("webPay")
     public ApiResult webPay(@RecordBody Record record) {
-        String order_num = record.getString("order_num");
-        String order_amount = "2";
+        String order_num = CodeUtils.getTel();
+        String order_amount = "2.02";
+        String subject = "测试PC浏览器支付";
+        String body = "测试";
 
         //实例化客户端
         AlipayClient alipayClient = new DefaultAlipayClient(prop.alipayGateway, prop.alipayAppAppid, prop.alipayAppPrivateKey, "json", "UTF-8", prop.alipayAppPublicKey, "RSA2");  //获得初始化的AlipayClient
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest(); //创建API对应的request
         alipayRequest.setReturnUrl("http://127.0.0.1:8848/web-pay/index.html");
         alipayRequest.setNotifyUrl("http://demo.com"); //在公共参数中设置回跳和通知地址
-        alipayRequest.setBizContent("{" +
-                "    \"out_trade_no\":\"20150320010108845\"," +
-                "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
-                "    \"total_amount\":2.11," +
-                "    \"subject\":\"Iphone6 16G\"," +
-                "    \"body\":\"Iphone6 16G\"," +
-                "    }" +
-                "  }"); //填充业务参数
+        alipayRequest.setBizContent("{\"out_trade_no\":\"" + order_num + "\","
+                + "\"total_amount\":\"" + order_amount + "\","
+                + "\"subject\":\"" + subject + "\","
+                + "\"body\":\"" + body + "\","
+                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
         String form = "";
         try {
             form = alipayClient.pageExecute(alipayRequest)
@@ -142,6 +140,49 @@ public class AlipayController {
             e.printStackTrace();
         }
         return ApiResult.error();
+    }
+
+    /**
+     * 支付宝 网站支付
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("scanPay")
+    public ApiResult scanPay(@RecordBody Record record) {
+        String out_trade_no = CodeUtils.getTel();
+        String auth_code = record.getString("auth_code");
+        String total_amount = "2.02";
+        String subject = "测试付款码支付";
+
+        log.info("auth_code:" + auth_code);
+
+        //实例化客户端
+        AlipayClient alipayClient = new DefaultAlipayClient(prop.alipayGateway, prop.alipayAppAppid, prop.alipayAppPrivateKey, "json", "UTF-8", prop.alipayAppPublicKey, "RSA2");  //获得初始化的AlipayClient
+        AlipayTradePayRequest request = new AlipayTradePayRequest();  //创建API对应的request类
+        request.setBizContent("{" +
+                "\"out_trade_no\":\"" + out_trade_no + "\"," +
+                "\"scene\":\"bar_code\"," +
+                "\"auth_code\":\"" + auth_code + "\"," + //即用户在支付宝客户端内出示的付款码，使用一次即失效，需要刷新后再去付款
+                "\"subject\":\"" + subject + "\"," +
+                "\"store_id\":\"NJ_001\"," +
+                "\"timeout_express\":\"2m\"," +
+                "\"total_amount\":\"" + total_amount + "\"" +
+                "}");  //设置业务参数
+        try {
+            AlipayTradePayResponse res = alipayClient.execute(request);  //通过alipayClient调用API，获得对应的response类
+            if (res.isSuccess() && res.getCode()
+                                      .equals("10000")) {
+                String pr_id = res.getTradeNo();
+                log.info("pr_id:" + pr_id);
+                return ApiResult.success(pr_id);
+            } else {
+                return ApiResult.error();
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+            return ApiResult.error();
+        }
     }
 
     /**
