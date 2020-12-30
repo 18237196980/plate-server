@@ -6,12 +6,10 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayConstants;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.domain.AlipayTradeRefundModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.*;
-import com.alipay.api.response.AlipaySystemOauthTokenResponse;
-import com.alipay.api.response.AlipayTradeAppPayResponse;
-import com.alipay.api.response.AlipayTradePayResponse;
-import com.alipay.api.response.AlipayTradeQueryResponse;
+import com.alipay.api.response.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ex.framework.data.IDUtils;
 import com.ex.framework.data.Record;
@@ -50,6 +48,8 @@ public class AlipayController {
     SysAdminService sysAdminService;
     @Autowired
     GoodOrderService goodOrderService;
+
+    private static String pri_id = "";
 
     /**
      * 支付宝 app支付
@@ -97,6 +97,8 @@ public class AlipayController {
             //这里和普通的接口调用不同，使用的是sdkExecute
             AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
             String pid = response.getBody();
+            pri_id = pid;
+            log.info("pid---:" + pid);
             Record r = Record.build()
                              .set("pid", pid)
                              .set("orderId", order_num);
@@ -104,6 +106,67 @@ public class AlipayController {
             return ApiResult.success(r);
         } catch (AlipayApiException e) {
             e.printStackTrace();
+            return ApiResult.error();
+        }
+    }
+
+    /**
+     * 支付宝 app退款
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("doBack")
+    public ApiResult doBack(@RecordBody Record record) {
+        String order_num = record.getString("order_num");
+        String order_amount = record.getString("order_amount");
+
+        GoodOrder goodOrder = goodOrderService.get(Q.GoodOrder()
+                                                    .eq("order_num", order_num)
+                                                    .eq("status", 1));
+        log.info("订单goodOrder:" + goodOrder);
+        boolean exists = goodOrderService.exists(Q.GoodOrder()
+                                                  .eq("order_num", order_num));
+        if (!exists) {
+            return ApiResult.error("订单不存在");
+        }
+        if (goodOrder == null) {
+            log.info("订单未支付，不能退款--------------");
+            return ApiResult.error("订单未支付，不能退款");
+        }
+
+        log.info("支付宝交易号----------------------------:" + goodOrder.getPri_pay_id());
+
+        if (StringUtils.isEmpty(order_amount)) {
+            log.info("支付金额为空----------------------------");
+        }
+
+        //实例化客户端
+        AlipayClient alipayClient = new DefaultAlipayClient(prop.alipayGateway, prop.alipayAppAppid, prop.alipayAppPrivateKey, "json", "UTF-8", prop.alipayAppPublicKey, "RSA2");
+
+        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+        AlipayTradeRefundModel refundModel = new AlipayTradeRefundModel();
+        refundModel.setTradeNo(goodOrder.getPri_pay_id());
+        refundModel.setRefundAmount(order_amount);
+        refundModel.setRefundReason("商品退款");
+        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
+        AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
+        request.setBizModel(refundModel);
+        try {
+            AlipayTradeRefundResponse response = alipayClient.execute(request);
+            if (response.getCode()
+                        .equals("10000")) {
+                log.info("调用退款成功---");
+                goodOrder.setStatus(3);
+                goodOrderService.updateById(goodOrder);
+                return ApiResult.success();
+            } else {
+                log.info("调用退款失败---");
+                return ApiResult.error();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("支付宝退款错误！", e.getMessage());
             return ApiResult.error();
         }
     }
@@ -193,6 +256,8 @@ public class AlipayController {
     @RequestMapping("/notifyOrder")
     public String notifyOrderInfo(HttpServletRequest request) {
         String tradeStatus = request.getParameter("trade_status");
+        //支付宝交易号
+        String trade_no = request.getParameter("trade_no");
 
         log.info("进入回调通知------------------------------------------");
         if ("TRADE_SUCCESS".equals(tradeStatus) || "TRADE_FINISH".equals(tradeStatus)) {
@@ -224,6 +289,7 @@ public class AlipayController {
                         return "failure";
                     } else {
                         goodOrder.setStatus(1);
+                        goodOrder.setPri_pay_id(trade_no);
                         goodOrderService.updateById(goodOrder);
                         return "success";
                     }

@@ -15,9 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.DispatcherType;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 使注解@RecordBody生效
@@ -105,6 +103,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/plate/user/getOpedId",
                 "/plate/me/getPhoneCode",
                 "/ali/webPay",
+                "/ali/scanPay",
                 "/ali/**");
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")
