@@ -41,4 +41,9 @@ public class Constast {
     public static final Integer PHONE_CODE_EXPIRE = 60 * 1; // 验证码1分钟过期
 
 
+    /**
+     * 公众号token 过期时间(2小时，微信规定的)
+     */
+    public static final String GZH_TOKEN = "gzh-token_";
+
 }

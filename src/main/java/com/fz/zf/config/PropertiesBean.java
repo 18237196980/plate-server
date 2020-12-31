@@ -68,4 +68,22 @@ public class PropertiesBean {
     @Value("${alipay-app-private-key}")
     public String alipayAppPrivateKey;
 
+    /**
+     * 微信公众号token
+     */
+    @Value("${gzh-token}")
+    public String gzhToken;
+
+    /**
+     * 微信公众号appid
+     */
+    @Value("${gzh-appid}")
+    public String gzhAppid;
+
+    /**
+     * 微信公众号appsecret
+     */
+    @Value("${gzh-appsecret}")
+    public String gzhAppsecret;
+
 }

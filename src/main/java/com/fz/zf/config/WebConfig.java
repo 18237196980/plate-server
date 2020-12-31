@@ -74,6 +74,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         //注意：1个*号
         List<String> excludes = Lang.list();
+        excludes.add("/gzh");
 
         XSSEscapeFilter filter = new XSSEscapeFilter();
         filter.excludes = excludes;
@@ -104,6 +105,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/plate/me/getPhoneCode",
                 "/ali/webPay",
                 "/ali/scanPay",
+                "/gzh/**",
                 "/ali/**");
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")
