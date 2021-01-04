@@ -11,6 +11,7 @@ import com.fz.zf.util.RedisUtil;
 import com.fz.zf.util.ShaUtil;
 import com.thoughtworks.xstream.XStream;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +59,6 @@ public class GzhService {
      * @return
      */
     public String processToStrXml(Map<String, String> map) {
-
         fullMenus();
 
         String msgType = map.get("MsgType");
@@ -76,6 +76,11 @@ public class GzhService {
             case "news":
                 msg = dealNews(map);
                 break;
+            case "event":
+                msg = dealEvent(map);
+                break;
+            default:
+                break;
         }
         XStream stream = new XStream();
         processMsg(stream);
@@ -84,6 +89,36 @@ public class GzhService {
         return res_xml;
     }
 
+    /**
+     * 处理菜单点击事件
+     *
+     * @param map
+     * @return
+     */
+    private BaseMessage dealEvent(Map<String, String> map) {
+        String event = map.get("Event");
+        String eventKey = map.get("EventKey");
+        switch (event) {
+            case "CLICK":
+                if (StringUtils.equals(eventKey, "1")) {
+                    return dealClickEvent(map);
+                }
+            case "VIEW":
+
+                break;
+            default:
+                break;
+        }
+        return null;
+    }
+
+    private BaseMessage dealClickEvent(Map<String, String> map) {
+        return new TextMessage(map, "你点击了我");
+    }
+
+    /**
+     * 加载菜单
+     */
     private void fullMenus() {
         Object token = getToken();
         if (token == null) {
@@ -91,11 +126,11 @@ public class GzhService {
         } else {
             MenuBtns menuBtns = new MenuBtns();
             menuBtns.getButton()
-                    .add(new ClickRootMenu("菜单1", "click", "1"));
+                    .add(new ClickRootMenu("点我试试", "click", "1"));
 
             List<SubButton> sub_button = new ArrayList<>();
-            sub_button.add(new ViewSubButton("搜狗", "view", "http://www.soso.com/"));
-            sub_button.add(new PhotoSubButton("传图", "pic_photo_or_album", "21"));
+            sub_button.add(new ViewSubButton("百度一下", "view", "http://www.soso.com/"));
+            sub_button.add(new PhotoSubButton("拍照或选择相册", "pic_photo_or_album", "21"));
 
             menuBtns.getButton()
                     .add(new TreeRootMenu("分类菜单", sub_button));
@@ -116,7 +151,7 @@ public class GzhService {
         String url = "https://www.baidu.com/?tn=62095104_19_oem_dg";
 
         List<Articles> articles = new ArrayList<>();
-        articles.add(new Articles("今晨要闻", "郑州车牌号改革", pic_url, url));
+        articles.add(new Articles("今晨要闻", "郑州高速免费时间段", pic_url, url));
 
         NewsMessage new_msg = new NewsMessage(map, articles);
         return new_msg;
