@@ -1,10 +1,8 @@
 package com.fz.zf.wxgzh;
 
 import com.fz.zf.config.PropertiesBean;
-import com.fz.zf.model.gzh.TextMessage;
 import com.fz.zf.service.gzh.GzhService;
 import com.fz.zf.util.MessageUtil;
-import com.thoughtworks.xstream.XStream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,10 +58,10 @@ public class GzhController {
 
             out = response.getWriter();
             Map<String, String> map = MessageUtil.xmlToMap(request);
-            System.out.println(map);
+            log.info("post请求转换为map:" + map);
             String resp_xml = gzhService.processToStrXml(map);
 
-            System.out.println(resp_xml);
+            log.info("回复结果:" + resp_xml);
             out.print(resp_xml); // 将回应发送给微信服务器
         } catch (Exception e) {
             e.printStackTrace();

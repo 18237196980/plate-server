@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.fz.zf.config.PropertiesBean;
 import com.fz.zf.model.common.Constast;
 import com.fz.zf.model.gzh.*;
+import com.fz.zf.model.gzh.menu.*;
 import com.fz.zf.util.RedisUtil;
 import com.fz.zf.util.ShaUtil;
 import com.thoughtworks.xstream.XStream;
@@ -57,6 +58,9 @@ public class GzhService {
      * @return
      */
     public String processToStrXml(Map<String, String> map) {
+
+        fullMenus();
+
         String msgType = map.get("MsgType");
         BaseMessage msg = null;
         String res_xml = "";
@@ -78,6 +82,33 @@ public class GzhService {
 
         res_xml = stream.toXML(msg);
         return res_xml;
+    }
+
+    private void fullMenus() {
+        Object token = getToken();
+        if (token == null) {
+            log.info("token获取失败");
+        } else {
+            MenuBtns menuBtns = new MenuBtns();
+            menuBtns.getButton()
+                    .add(new ClickRootMenu("菜单1", "click", "1"));
+
+            List<SubButton> sub_button = new ArrayList<>();
+            sub_button.add(new ViewSubButton("搜狗", "view", "http://www.soso.com/"));
+            sub_button.add(new PhotoSubButton("传图", "pic_photo_or_album", "21"));
+
+            menuBtns.getButton()
+                    .add(new TreeRootMenu("分类菜单", sub_button));
+
+            String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+
+            JSONObject json = JSONUtil.parseObj(menuBtns);
+            log.info("哈哈哈:" + json);
+            url = url.replace("ACCESS_TOKEN", token.toString());
+            String resp = HttpUtil.post(url, json.toString());
+
+            log.info("结果:" + resp);
+        }
     }
 
     private BaseMessage dealNews(Map<String, String> map) {
