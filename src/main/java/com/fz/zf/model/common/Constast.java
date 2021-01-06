@@ -44,7 +44,7 @@ public class Constast {
      * 公众号token 过期时间(2小时，微信规定的)
      */
     public static final String GZH_TOKEN = "gzh-token_";
-    public static final String GZH_MY_ID = "gzh-ovzQ2640QXMz1hEKJbKim2pcsDzg";
+    public static final String GZH_MY_ID = "ovzQ2640QXMz1hEKJbKim2pcsDzg";
 
     /**
      * 公众号模板信息颜色
@@ -61,6 +61,12 @@ public class Constast {
      * 公众号设置菜单url
      */
     public static final String SET_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=";
+
+    /**
+     * 公众号获取用户基本信息
+     */
+    public static final String GET_USERINFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
+
 
     /**
      * 公众号发送模板的id

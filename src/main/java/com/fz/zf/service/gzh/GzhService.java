@@ -61,6 +61,7 @@ public class GzhService {
      * @return
      */
     public String processToStrXml(Map<String, String> map) {
+        getUserInfo();
         if (!Constast.INIT_MENU_FLAG) {
             fullMenus();
         }
@@ -115,6 +116,15 @@ public class GzhService {
                 break;
         }
         return null;
+    }
+
+    private void getUserInfo() {
+        String url = Constast.GET_USERINFO_URL;
+        url = url.replace("ACCESS_TOKEN", getToken().toString())
+                 .replace("OPENID", Constast.GZH_MY_ID);
+
+        String post = HttpUtil.post(url, new HashMap<>());
+        log.info("用户基本信息:" + post);
     }
 
     // 回复图片中文字
