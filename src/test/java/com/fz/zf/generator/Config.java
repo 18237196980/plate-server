@@ -9,12 +9,13 @@ public class Config {
     /**
      * 项目根包名
      */
-    public static final String BASE_PACKAGE = "com.zf.factory.application";
+    // public static final String BASE_PACKAGE = "com.zf.factory.application";
+    public static final String BASE_PACKAGE = "com.fz.zf";
 
     /**
      * Model包名
      */
-    public static final String MODEL_PACKAGE = BASE_PACKAGE + ".model";
+    public static final String MODEL_PACKAGE = BASE_PACKAGE + ".model.app";
 
     /**
      * Mapper包名
@@ -24,7 +25,7 @@ public class Config {
     /**
      * Service包名
      */
-    public static final String SERVICE_PACKAGE = BASE_PACKAGE + ".service";
+    public static final String SERVICE_PACKAGE = BASE_PACKAGE + ".service.app";
 
     /**
      * Controller包名

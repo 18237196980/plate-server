@@ -106,6 +106,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/ali/webPay",
                 "/ali/scanPay",
                 "/gzh/**",
+                "/ele/**",
                 "/ali/**");
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")

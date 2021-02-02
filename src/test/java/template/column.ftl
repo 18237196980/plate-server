@@ -1,4 +1,4 @@
-package ${extraPackage};
+package ${modelPackage};
 
 
 public class Column {

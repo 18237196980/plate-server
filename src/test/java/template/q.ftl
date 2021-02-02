@@ -1,4 +1,4 @@
-package ${extraPackage};
+package ${modelPackage};
 
 import com.ex.framework.mybatisplus.LambdaQueryBuilder;
 import com.ex.framework.mybatisplus.QueryBuilder;
