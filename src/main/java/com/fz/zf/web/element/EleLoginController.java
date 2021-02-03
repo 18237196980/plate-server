@@ -1,23 +1,26 @@
 package com.fz.zf.web.element;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.ex.framework.data.IDUtils;
 import com.ex.framework.data.Record;
-import com.ex.framework.util.security.Md5;
+import com.ex.framework.data.RecordBody;
+import com.ex.framework.web.ExPage;
+import com.ex.framework.web.ExPageResult;
+import com.ex.framework.web.TableResult;
+import com.fz.zf.app.BaseController;
 import com.fz.zf.model.app.SysAdmin;
 import com.fz.zf.model.app.User;
 import com.fz.zf.model.common.Constast;
 import com.fz.zf.service.app.SysAdminService;
+import com.fz.zf.service.el.OaMenuService;
 import com.fz.zf.util.ApiResult;
 import com.fz.zf.util.MD5;
 import com.fz.zf.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,12 +30,16 @@ import java.util.UUID;
 @RequestMapping("/ele")
 @Slf4j
 @SuppressWarnings("all")
-public class EleLoginController {
+public class EleLoginController extends BaseController {
 
     @Autowired
     SysAdminService sysAdminService;
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    OaMenuService oaMenuService;
+    @Autowired
+    SysAdminService adminService;
 
     /**
      * elementUI 登陆
@@ -76,6 +83,44 @@ public class EleLoginController {
                               .set("token", token);
 
         return ApiResult.success(record);
+    }
+
+
+    /**
+     * 获取主页菜单
+     *
+     * @return
+     */
+    @RequestMapping("menus")
+    public ApiResult menus() {
+        try {
+            List list = oaMenuService.listMenus();
+            return ApiResult.success(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.error("获取菜单失败");
+        }
+    }
+
+    /**
+     * 用户列表
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("users")
+    public Object users(@RecordBody Record record) {
+        try {
+            String cnname = record.getString("cnname");
+            QueryWrapper<SysAdmin> wrapper = new QueryWrapper<>();
+            wrapper.likeRight(StringUtils.isNotEmpty(cnname), "cnname", cnname);
+            ExPage page = parseExPage(record);
+            ExPageResult<SysAdmin> pageResult = adminService.list(page, wrapper);
+            return TableResult.success(pageResult);
+        } catch (Exception ex) {
+            return TableResult.error(ex.getLocalizedMessage());
+        }
+
     }
 
     // 存储到redis 格式zf-token_uid,token,当前时间
