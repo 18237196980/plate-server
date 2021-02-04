@@ -3,6 +3,7 @@ package com.fz.zf.web.element;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ex.framework.data.Record;
 import com.ex.framework.data.RecordBody;
+import com.ex.framework.web.ApiResult;
 import com.ex.framework.web.ExPage;
 import com.ex.framework.web.ExPageResult;
 import com.ex.framework.web.TableResult;
@@ -12,7 +13,6 @@ import com.fz.zf.model.app.User;
 import com.fz.zf.model.common.Constast;
 import com.fz.zf.service.app.SysAdminService;
 import com.fz.zf.service.el.OaMenuService;
-import com.fz.zf.util.ApiResult;
 import com.fz.zf.util.MD5;
 import com.fz.zf.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -114,6 +114,7 @@ public class EleLoginController extends BaseController {
             String cnname = record.getString("cnname");
             QueryWrapper<SysAdmin> wrapper = new QueryWrapper<>();
             wrapper.likeRight(StringUtils.isNotEmpty(cnname), "cnname", cnname);
+            wrapper.orderByDesc("id");
             ExPage page = parseExPage(record);
             ExPageResult<SysAdmin> pageResult = adminService.list(page, wrapper);
             return TableResult.success(pageResult);
@@ -121,6 +122,74 @@ public class EleLoginController extends BaseController {
             return TableResult.error(ex.getLocalizedMessage());
         }
 
+    }
+
+    /**
+     * 添加用户
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("user/add")
+    public ApiResult addUser(@RequestBody SysAdmin sysAdmin) {
+        try {
+            return sysAdminService.addWithCheck(sysAdmin);
+        } catch (Exception ex) {
+            return ApiResult.error("添加失败");
+        }
+    }
+
+    /**
+     * 根据用户id查询用户
+     *
+     * @param record
+     * @return
+     */
+    @GetMapping("user/getById")
+    public ApiResult getUserById(@RequestParam("id") String id) {
+        try {
+            // String id = record.getString("id");
+            if (StringUtils.isEmpty(id)) {
+                return ApiResult.error("用户id不能为空");
+            }
+            SysAdmin sysAdmin = sysAdminService.get(id);
+            if (sysAdmin == null) {
+                return ApiResult.error("用户不存在");
+            }
+            return ApiResult.success(sysAdmin);
+        } catch (Exception ex) {
+            return ApiResult.error("添加失败");
+        }
+    }
+
+    /**
+     * 编辑用户
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("user/edit")
+    public ApiResult editUser(@RequestBody SysAdmin sysAdmin) {
+        try {
+            return sysAdminService.editWithCheck(sysAdmin);
+        } catch (Exception ex) {
+            return ApiResult.error("添加失败");
+        }
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("user/del")
+    public ApiResult delUser(@RequestBody SysAdmin sysAdmin) {
+        try {
+            return sysAdminService.delWithCheck(sysAdmin.getId());
+        } catch (Exception ex) {
+            return ApiResult.error("添加失败");
+        }
     }
 
     // 存储到redis 格式zf-token_uid,token,当前时间
