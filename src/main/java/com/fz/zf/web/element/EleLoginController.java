@@ -11,8 +11,11 @@ import com.fz.zf.app.BaseController;
 import com.fz.zf.model.app.SysAdmin;
 import com.fz.zf.model.app.User;
 import com.fz.zf.model.common.Constast;
+import com.fz.zf.model.el.OaRole;
 import com.fz.zf.service.app.SysAdminService;
 import com.fz.zf.service.el.OaMenuService;
+import com.fz.zf.service.el.OaRoleMenuService;
+import com.fz.zf.service.el.OaRoleService;
 import com.fz.zf.util.MD5;
 import com.fz.zf.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +43,10 @@ public class EleLoginController extends BaseController {
     OaMenuService oaMenuService;
     @Autowired
     SysAdminService adminService;
+    @Autowired
+    OaRoleService oaRoleService;
+    @Autowired
+    OaRoleMenuService oaRoleMenuService;
 
     /**
      * elementUI 登陆
@@ -114,7 +121,6 @@ public class EleLoginController extends BaseController {
             String cnname = record.getString("cnname");
             QueryWrapper<SysAdmin> wrapper = new QueryWrapper<>();
             wrapper.likeRight(StringUtils.isNotEmpty(cnname), "cnname", cnname);
-            wrapper.orderByDesc("id");
             ExPage page = parseExPage(record);
             ExPageResult<SysAdmin> pageResult = adminService.list(page, wrapper);
             return TableResult.success(pageResult);
@@ -148,7 +154,6 @@ public class EleLoginController extends BaseController {
     @GetMapping("user/getById")
     public ApiResult getUserById(@RequestParam("id") String id) {
         try {
-            // String id = record.getString("id");
             if (StringUtils.isEmpty(id)) {
                 return ApiResult.error("用户id不能为空");
             }
@@ -189,6 +194,56 @@ public class EleLoginController extends BaseController {
             return sysAdminService.delWithCheck(sysAdmin.getId());
         } catch (Exception ex) {
             return ApiResult.error("添加失败");
+        }
+    }
+
+    /**
+     * 获取角色列表
+     *
+     * @return
+     */
+    @RequestMapping("roles")
+    public Object roles(@RecordBody Record record) {
+        try {
+            String name = record.getString("name");
+            ExPage page = parseExPage(record);
+            ExPageResult<OaRole> pageResult = oaRoleService.listRoles(page, record);
+            return TableResult.success(pageResult);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return TableResult.error(ex.getLocalizedMessage());
+        }
+    }
+
+    /**
+     * 删除角色下的权限
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("roleMenu/del")
+    public ApiResult delRoleMenu(@RecordBody Record record) {
+        try {
+            return oaRoleMenuService.delRoleMenu(record);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ApiResult.error("删除失败");
+        }
+    }
+
+    /**
+     * 获取树形结构菜单权限
+     *
+     * @return
+     */
+    @GetMapping("treePrems")
+    public ApiResult treePrems() {
+        try {
+            List list = oaMenuService.listMenus();
+            return ApiResult.success(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.error("获取权限失败");
         }
     }
 

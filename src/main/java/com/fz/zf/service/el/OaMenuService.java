@@ -19,6 +19,7 @@ import java.util.List;
  * @since 2021-02-03
  */
 @Service
+@SuppressWarnings("all")
 public class OaMenuService extends BaseCRUDService<OaMenuMapper, OaMenu> {
     protected Column.OaMenu c = new Column.OaMenu();
 

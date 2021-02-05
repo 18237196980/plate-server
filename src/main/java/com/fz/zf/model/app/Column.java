@@ -176,6 +176,55 @@ public class Column {
     }
 
     /**
+     * OA系统角色表
+     * 表名：oa_role
+     */
+    public static class OaRole {
+
+        public final String id = "id";
+
+        /**
+         * 角色名称
+         */
+        public final String name = "name";
+
+        /**
+         * 角色编码
+         */
+        public final String code = "code";
+
+        /**
+         * 是否可用
+         */
+        public final String enable_flag = "enable_flag";
+
+        public final String remark = "remark";
+
+        public final String create_time = "create_time";
+
+        public final String create_user = "create_user";
+
+        public final String update_time = "update_time";
+
+        public final String update_user = "update_user";
+
+    }
+
+    /**
+     * OA系统角色菜单表
+     * 表名：oa_role_menu
+     */
+    public static class OaRoleMenu {
+
+        public final String id = "id";
+
+        public final String role_id = "role_id";
+
+        public final String menu_id = "menu_id";
+
+    }
+
+    /**
      * 表名：plate
      */
     public static class Plate {
@@ -376,7 +425,7 @@ public class Column {
     }
 
     /**
-    *
+     *
     * 表名：video_list
     */
     public static class VideoList {
