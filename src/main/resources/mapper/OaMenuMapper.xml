@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fz.zf.mapper.OaMenuMapper">
+
+    <select id="listMenuByUid" resultType="com.fz.zf.model.el.OaMenu">
+      SELECT c.*
+      from oa_user_role a
+      LEFT JOIN
+      oa_role_menu b
+      on a.role_id=b.role_id
+      LEFT JOIN
+      oa_menu c
+      on b.menu_id=c.id
+      where a.user_id=#{userId}
+      order by c.id asc
+    </select>
+
+</mapper>

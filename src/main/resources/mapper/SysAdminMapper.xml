@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fz.zf.mapper.SysAdminMapper">
+    <select id="listUsers" resultType="map">
+        SELECT
+        a.*,
+        c.name roleName
+        from sys_admin a
+        LEFT JOIN oa_user_role b
+        on a.id=b.user_id
+        LEFT JOIN oa_role c
+        on c.id=b.role_id
+        <where>
+            <if test="cnname!=null and cnname != '' ">
+                AND a.cnname LIKE CONCAT(#{cnname},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

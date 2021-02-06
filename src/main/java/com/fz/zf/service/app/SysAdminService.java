@@ -1,9 +1,14 @@
 package com.fz.zf.service.app;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ex.framework.base.BaseCRUDService;
 import com.ex.framework.data.IDUtils;
 import com.ex.framework.data.Record;
 import com.ex.framework.web.ApiResult;
+import com.ex.framework.web.ExPage;
+import com.ex.framework.web.ExPageResult;
 import com.fz.zf.mapper.SysAdminMapper;
 import com.fz.zf.model.app.Column;
 import com.fz.zf.model.app.SysAdmin;
@@ -14,6 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+
+import static com.ex.framework.mybatisplus.MyBatisPlusUtils.toExPageResultMap;
+import static com.ex.framework.mybatisplus.MyBatisPlusUtils.toPage;
 
 @Service
 @Transactional(readOnly = true)
@@ -134,4 +143,11 @@ public class SysAdminService extends BaseCRUDService<SysAdminMapper, SysAdmin> {
         }
     }
 
+    public ExPageResult<Map<String, Object>> listUsers(ExPage page, Record record) {
+        String cnname = record.getString("cnname");
+        Page mPage = toPage(page);
+
+        IPage<Map<String, Object>> result = baseMapper.listUsers(mPage, cnname);
+        return toExPageResultMap(result);
+    }
 }

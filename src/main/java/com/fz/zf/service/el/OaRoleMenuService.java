@@ -1,7 +1,9 @@
 package com.fz.zf.service.el;
 
 import com.ex.framework.base.BaseCRUDService;
+import com.ex.framework.data.IDUtils;
 import com.ex.framework.data.Record;
+import com.ex.framework.util.Lang;
 import com.ex.framework.web.ApiResult;
 import com.fz.zf.mapper.OaRoleMenuMapper;
 import com.fz.zf.model.app.Column;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,5 +59,28 @@ public class OaRoleMenuService extends BaseCRUDService<OaRoleMenuMapper, OaRoleM
         OaRole oaRole = oaRoleService.get(role_id);
         oaRoleService.processRole(oaRole);
         return ApiResult.success(oaRole.getPerms());
+    }
+
+    @Transactional
+    public ApiResult givePerms(Record record) {
+        List<OaRoleMenu> list = Lang.list();
+
+
+        String role_id = record.getString("role_id");
+        ArrayList ids = record.getList("ids");
+
+        delete(query().eq(c.role_id, role_id));
+
+        for (Object id : ids) {
+            OaRoleMenu oaRoleMenu = new OaRoleMenu();
+            oaRoleMenu.setId(IDUtils.getSequenceStr());
+            oaRoleMenu.setRole_id(role_id);
+            oaRoleMenu.setMenu_id(id.toString());
+            list.add(oaRoleMenu);
+        }
+
+        add(list);
+
+        return ApiResult.success("分配权限成功");
     }
 }

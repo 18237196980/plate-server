@@ -16,6 +16,7 @@ import com.fz.zf.service.app.SysAdminService;
 import com.fz.zf.service.el.OaMenuService;
 import com.fz.zf.service.el.OaRoleMenuService;
 import com.fz.zf.service.el.OaRoleService;
+import com.fz.zf.service.el.OaUserRoleService;
 import com.fz.zf.util.MD5;
 import com.fz.zf.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -47,6 +49,8 @@ public class EleLoginController extends BaseController {
     OaRoleService oaRoleService;
     @Autowired
     OaRoleMenuService oaRoleMenuService;
+    @Autowired
+    OaUserRoleService oaUserRoleService;
 
     /**
      * elementUI 登陆
@@ -101,7 +105,7 @@ public class EleLoginController extends BaseController {
     @RequestMapping("menus")
     public ApiResult menus() {
         try {
-            List list = oaMenuService.listMenus();
+            List list = oaMenuService.listMenuByUid();
             return ApiResult.success(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,11 +122,8 @@ public class EleLoginController extends BaseController {
     @PostMapping("users")
     public Object users(@RecordBody Record record) {
         try {
-            String cnname = record.getString("cnname");
-            QueryWrapper<SysAdmin> wrapper = new QueryWrapper<>();
-            wrapper.likeRight(StringUtils.isNotEmpty(cnname), "cnname", cnname);
             ExPage page = parseExPage(record);
-            ExPageResult<SysAdmin> pageResult = adminService.list(page, wrapper);
+            ExPageResult<Map<String, Object>> pageResult = adminService.listUsers(page, record);
             return TableResult.success(pageResult);
         } catch (Exception ex) {
             return TableResult.error(ex.getLocalizedMessage());
@@ -216,6 +217,24 @@ public class EleLoginController extends BaseController {
     }
 
     /**
+     * 获取角色列表
+     *
+     * @return
+     */
+    @GetMapping("all/roles")
+    public ApiResult allRoles(@RecordBody Record record) {
+        try {
+            QueryWrapper<OaRole> query = new QueryWrapper<>();
+            query.eq("enable_flag", 1);
+            List<OaRole> oaRoles = oaRoleService.list(query);
+            return ApiResult.success(oaRoles);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ApiResult.error("获取角色列表失败");
+        }
+    }
+
+    /**
      * 删除角色下的权限
      *
      * @param record
@@ -239,11 +258,42 @@ public class EleLoginController extends BaseController {
     @GetMapping("treePrems")
     public ApiResult treePrems() {
         try {
-            List list = oaMenuService.listMenus();
+            List list = oaMenuService.listAllMenus();
             return ApiResult.success(list);
         } catch (Exception e) {
             e.printStackTrace();
             return ApiResult.error("获取权限失败");
+        }
+    }
+
+    /**
+     * 分配权限
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("givePerms")
+    public ApiResult givePerms(@RecordBody Record record) {
+        try {
+            return oaRoleMenuService.givePerms(record);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ApiResult.error("分配权限失败");
+        }
+    }
+
+    /**
+     * 为用户分配角色
+     *
+     * @param record
+     * @return
+     */
+    @PostMapping("assignRoleForUser")
+    public ApiResult assignRoleForUser(@RecordBody Record record) {
+        try {
+            return oaUserRoleService.assignRoleForUser(record);
+        } catch (Exception ex) {
+            return ApiResult.error("分配角色失败");
         }
     }
 
