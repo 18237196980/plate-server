@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserInfoUtils {
 
     public static String getCurrentUserId() {
-        // 如果是app端获取用户Id,则需要从header中取uid字段
+        // header中取uid字段
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
             HttpServletRequest request = attributes.getRequest();
