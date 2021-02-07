@@ -11,12 +11,10 @@ import com.fz.zf.app.BaseController;
 import com.fz.zf.model.app.SysAdmin;
 import com.fz.zf.model.app.User;
 import com.fz.zf.model.common.Constast;
+import com.fz.zf.model.el.GoodsCate;
 import com.fz.zf.model.el.OaRole;
 import com.fz.zf.service.app.SysAdminService;
-import com.fz.zf.service.el.OaMenuService;
-import com.fz.zf.service.el.OaRoleMenuService;
-import com.fz.zf.service.el.OaRoleService;
-import com.fz.zf.service.el.OaUserRoleService;
+import com.fz.zf.service.el.*;
 import com.fz.zf.util.MD5;
 import com.fz.zf.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +49,8 @@ public class EleLoginController extends BaseController {
     OaRoleMenuService oaRoleMenuService;
     @Autowired
     OaUserRoleService oaUserRoleService;
+    @Autowired
+    GoodsCateService goodsCateService;
 
     /**
      * elementUI 登陆
@@ -294,6 +294,23 @@ public class EleLoginController extends BaseController {
             return oaUserRoleService.assignRoleForUser(record);
         } catch (Exception ex) {
             return ApiResult.error("分配角色失败");
+        }
+    }
+
+    /**
+     * 获取商品分类三级数据
+     *
+     * @return
+     */
+    @GetMapping("goodsCateLevel")
+    public ApiResult goodsCateLevel(@RecordBody Record record) {
+        try {
+            Integer type = record.getInteger("type");
+            List<GoodsCate> list = goodsCateService.goodsCateLevel(type);
+            return ApiResult.success(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.error("获取权限失败");
         }
     }
 

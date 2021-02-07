@@ -3,217 +3,172 @@ package com.fz.zf.model.app;
 
 public class Column {
     /**
-     *
-     * 表名：dian_zan
-     */
+    * 
+    * 表名：dian_zan
+    */
     public static class DianZan {
 
         public final String id = "id";
 
         /**
-         * 视频id
-         */
+        * 视频id
+        */
         public final String vid = "vid";
 
         /**
-         * 用户id
-         */
+        * 用户id
+        */
         public final String uid = "uid";
 
         /**
-         * 点赞时间
-         */
+        * 点赞时间
+        */
         public final String create_time = "create_time";
 
         /**
-         * 1(点赞)，2(收藏),3(评论)
-         */
+        * 1(点赞)，2(收藏),3(评论)
+        */
         public final String type = "type";
 
     }
 
     /**
-     *
-     * 表名：good_order
-     */
-    public static class GoodOrder {
+    * 
+    * 表名：goods_cate
+    */
+    public static class GoodsCate {
 
         public final String id = "id";
 
         /**
-         * 订单id
-         */
-        public final String order_num = "order_num";
+        * 分类名称
+        */
+        public final String name = "name";
 
         /**
-         * 金额
-         */
-        public final String order_amount = "order_amount";
+        * 分类层级 1.一级分类 2.二级分类 3.三级分类
+        */
+        public final String type = "type";
 
         /**
-         * 支付平台预支付id
-         */
-        public final String pri_pay_id = "pri_pay_id";
+        * 父级id
+        */
+        public final String pid = "pid";
 
         /**
-         * 支付时间
-         */
-        public final String pay_time = "pay_time";
-
-        /**
-         * 订单状态
-         */
-        public final String status = "status";
-
-        /**
-         * 用户id
-         */
-        public final String uid = "uid";
+        * 是否启用
+        */
+        public final String enable_flag = "enable_flag";
 
     }
 
     /**
-     * 菜单权限表
-     * 表名：oa_menu
-     */
+    * 菜单权限表
+    * 表名：oa_menu
+    */
     public static class OaMenu {
 
         /**
-         * 主键id
-         */
+        * 主键id
+        */
         public final String id = "id";
 
         /**
-         * 父id
-         */
+        * 父id
+        */
         public final String parent_id = "parent_id";
 
         /**
-         * 菜单标题
-         */
+        * 菜单标题
+        */
         public final String name = "name";
 
         /**
-         * 菜单图标
-         */
+        * 菜单图标
+        */
         public final String icon = "icon";
 
         /**
-         * 路径
-         */
+        * 路径
+        */
         public final String path = "path";
 
         /**
-         * 组件
-         */
+        * 组件
+        */
         public final String component = "component";
 
         /**
-         * 组件名字
-         */
+        * 组件名字
+        */
         public final String component_name = "component_name";
 
         /**
-         * 一级菜单跳转地址
-         */
+        * 一级菜单跳转地址
+        */
         public final String redirect = "redirect";
 
         /**
-         * 菜单排序
-         */
+        * 菜单排序
+        */
         public final String sort_no = "sort_no";
 
         /**
-         * 菜单类型(0:一级菜单; 1:子菜单:2:按钮权限)
-         */
+        * 菜单类型(0:一级菜单; 1:子菜单:2:按钮权限)
+        */
         public final String menu_type = "menu_type";
 
         /**
-         * 菜单权限编码
-         */
+        * 菜单权限编码
+        */
         public final String perms = "perms";
 
         /**
-         * 是否在菜单中显示: 0否,1是（默认值1）
-         */
+        * 是否在菜单中显示: 0否,1是（默认值1）
+        */
         public final String hidden = "hidden";
 
         /**
-         * 是否为固定标签: 0:不是  1:是（默认值0）
-         */
+        * 是否为固定标签: 0:不是  1:是（默认值0）
+        */
         public final String is_affix = "is_affix";
 
         /**
-         * 是否缓存该页面:    1:是   0:不是
-         */
+        * 是否缓存该页面:    1:是   0:不是
+        */
         public final String keep_alive = "keep_alive";
 
         /**
-         * 创建人
-         */
+        * 创建人
+        */
         public final String create_user = "create_user";
 
         /**
-         * 创建时间
-         */
+        * 创建时间
+        */
         public final String create_time = "create_time";
 
         /**
-         * 更新人
-         */
+        * 更新人
+        */
         public final String update_user = "update_user";
 
         /**
-         * 更新时间
-         */
+        * 更新时间
+        */
         public final String update_time = "update_time";
 
         /**
-         * 描述
-         */
+        * 描述
+        */
         public final String remark = "remark";
 
     }
 
     /**
-     * OA系统角色表
-     * 表名：oa_role
-     */
-    public static class OaRole {
-
-        public final String id = "id";
-
-        /**
-         * 角色名称
-         */
-        public final String name = "name";
-
-        /**
-         * 角色编码
-         */
-        public final String code = "code";
-
-        /**
-         * 是否可用
-         */
-        public final String enable_flag = "enable_flag";
-
-        public final String remark = "remark";
-
-        public final String create_time = "create_time";
-
-        public final String create_user = "create_user";
-
-        public final String update_time = "update_time";
-
-        public final String update_user = "update_user";
-
-    }
-
-    /**
-     * OA系统角色菜单表
-     * 表名：oa_role_menu
-     */
+    * OA系统角色菜单表
+    * 表名：oa_role_menu
+    */
     public static class OaRoleMenu {
 
         public final String id = "id";
@@ -225,8 +180,9 @@ public class Column {
     }
 
     /**
-     * 表名：plate
-     */
+    * 
+    * 表名：plate
+    */
     public static class Plate {
 
         public final String id = "id";
@@ -276,20 +232,10 @@ public class Column {
         */
         public final String home_img = "home_img";
 
-        /**
-        * 更新时间
-        */
-        public final String update_time = "update_time";
-
-        /**
-        * 更新人
-        */
-        public final String update_user = "update_user";
-
     }
 
     /**
-     * 系统管理员账号表
+    * 系统管理员账号表
     * 表名：sys_admin
     */
     public static class SysAdmin {
@@ -413,7 +359,7 @@ public class Column {
     }
 
     /**
-     *
+    * 
     * 表名：video_category
     */
     public static class VideoCategory {
@@ -425,7 +371,7 @@ public class Column {
     }
 
     /**
-     *
+    * 
     * 表名：video_list
     */
     public static class VideoList {

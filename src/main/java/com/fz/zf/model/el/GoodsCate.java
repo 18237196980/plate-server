@@ -1,9 +1,12 @@
 package com.fz.zf.model.el;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.ex.framework.util.Lang;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -45,6 +48,9 @@ public class GoodsCate implements Serializable {
      * 是否启用
      */
     private Integer enable_flag;
+
+    @TableField(value = "false")
+    List<GoodsCate> children = Lang.list();
 
 
 }
