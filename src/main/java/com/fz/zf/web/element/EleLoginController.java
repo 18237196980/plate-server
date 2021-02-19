@@ -305,12 +305,72 @@ public class EleLoginController extends BaseController {
     @GetMapping("goodsCateLevel")
     public ApiResult goodsCateLevel(@RecordBody Record record) {
         try {
-            Integer type = record.getInteger("type");
+            String type = record.getString("type");
             List<GoodsCate> list = goodsCateService.goodsCateLevel(type);
             return ApiResult.success(list);
         } catch (Exception e) {
             e.printStackTrace();
             return ApiResult.error("获取权限失败");
+        }
+    }
+
+    /**
+     * 添加商品分类
+     *
+     * @return
+     */
+    @PostMapping("addGoodsCate")
+    public ApiResult addGoodsCate(@RequestBody GoodsCate goodsCate) {
+        try {
+            return goodsCateService.addGoodsCate(goodsCate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.error("添加商品分类失败");
+        }
+    }
+
+    /**
+     * 编辑商品分类
+     *
+     * @return
+     */
+    @PostMapping("editGoodsCate")
+    public ApiResult editGoodsCate(@RequestBody GoodsCate goodsCate) {
+        try {
+            return goodsCateService.editGoodsCate(goodsCate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.error("添加商品分类失败");
+        }
+    }
+
+    /**
+     * 根据商品分类id，查询商品分类
+     *
+     * @return
+     */
+    @GetMapping("getGoodsCate")
+    public ApiResult getGoodsCate(@RecordBody Record record) {
+        try {
+            return goodsCateService.getGoodsCate(record);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.error("查询商品分类失败");
+        }
+    }
+
+    /**
+     * 根据商品分类id，删除商品分类
+     *
+     * @return
+     */
+    @GetMapping("delGoodsCate")
+    public ApiResult delGoodsCate(@RecordBody Record record) {
+        try {
+            return goodsCateService.delGoodsCate(record);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.error("查询商品分类失败");
         }
     }
 

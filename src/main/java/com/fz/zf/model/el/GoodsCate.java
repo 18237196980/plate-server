@@ -50,7 +50,7 @@ public class GoodsCate implements Serializable {
     private Integer enable_flag;
 
     @TableField(value = "false")
-    List<GoodsCate> children = Lang.list();
+    List<GoodsCate> children = null;
 
 
 }
